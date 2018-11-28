@@ -1,0 +1,20 @@
+# filebeat.inputs:
+# - type: log
+#   enabled: true
+#   paths:
+#     - /var/log/*.log
+
+filebeat.prospectors:
+- input_type: log
+  paths:
+    - /var/log/*.log
+  json_message_key: message
+  json.keys_under_root: true
+
+output.elasticsearch:
+  hosts: ["es-master.namespace-logging.svc.cluster.local:9200"]
+  template.name: filebeat
+  template.path: filebeat.template.json
+
+setup.kibana:
+  host: "kibana.namespace-logging.svc.cluster.local:5601" 
